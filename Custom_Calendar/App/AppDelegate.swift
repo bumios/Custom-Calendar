@@ -6,7 +6,7 @@
 //  Copyright © 2019 MBA0204. All rights reserved.
 //
 
-import UIKitxx
+import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
