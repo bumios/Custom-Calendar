@@ -27,6 +27,7 @@
 		5373FA6D228538C00021CFB5 /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5373FA63228538C00021CFB5 /* UITextFieldExtension.swift */; };
 		5373FA6F228538D20021CFB5 /* CalendarCollectionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5373FA6E228538D20021CFB5 /* CalendarCollectionCellViewModel.swift */; };
 		5373FA71228538DF0021CFB5 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5373FA70228538DF0021CFB5 /* CalendarViewModel.swift */; };
+		5373FA752285396D0021CFB5 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5373FA742285396D0021CFB5 /* Color.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		5373FA63228538C00021CFB5 /* UITextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		5373FA6E228538D20021CFB5 /* CalendarCollectionCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionCellViewModel.swift; sourceTree = "<group>"; };
 		5373FA70228538DF0021CFB5 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		5373FA742285396D0021CFB5 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				5373FA352285334E0021CFB5 /* AppDelegate.swift */,
+				5373FA742285396D0021CFB5 /* Color.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -249,6 +252,7 @@
 				5373FA54228538630021CFB5 /* CalendarCollectionCell.swift in Sources */,
 				5373FA64228538C00021CFB5 /* UIFontExtension.swift in Sources */,
 				5373FA6C228538C00021CFB5 /* UICollectionViewExtension.swift in Sources */,
+				5373FA752285396D0021CFB5 /* Color.swift in Sources */,
 				5373FA69228538C00021CFB5 /* IntExtension.swift in Sources */,
 				5373FA4F2285382E0021CFB5 /* CalendarViewController.swift in Sources */,
 				5373FA66228538C00021CFB5 /* UIViewExtension.swift in Sources */,
