@@ -31,6 +31,7 @@
 		53C6FAE222856ED900BD763C /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C6FAE022856ED900BD763C /* DatePickerViewController.swift */; };
 		53C6FAE322856ED900BD763C /* DatePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53C6FAE122856ED900BD763C /* DatePickerViewController.xib */; };
 		53C6FAE522856EE800BD763C /* DatePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C6FAE422856EE800BD763C /* DatePickerViewModel.swift */; };
+		53F7C9F6228A639C002E9275 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F7C9F5228A639C002E9275 /* DateExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		53C6FAE022856ED900BD763C /* DatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
 		53C6FAE122856ED900BD763C /* DatePickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DatePickerViewController.xib; sourceTree = "<group>"; };
 		53C6FAE422856EE800BD763C /* DatePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerViewModel.swift; sourceTree = "<group>"; };
+		53F7C9F5228A639C002E9275 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +178,7 @@
 				5373FA63228538C00021CFB5 /* UITextFieldExtension.swift */,
 				5373FA5C228538BF0021CFB5 /* UIViewExtension.swift */,
 				5373FA5D228538BF0021CFB5 /* URLExtension.swift */,
+				53F7C9F5228A639C002E9275 /* DateExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				5373FA66228538C00021CFB5 /* UIViewExtension.swift in Sources */,
 				5373FA68228538C00021CFB5 /* StringExtension.swift in Sources */,
 				53C6FAE522856EE800BD763C /* DatePickerViewModel.swift in Sources */,
+				53F7C9F6228A639C002E9275 /* DateExtension.swift in Sources */,
 				5373FA71228538DF0021CFB5 /* CalendarViewModel.swift in Sources */,
 				5373FA67228538C00021CFB5 /* URLExtension.swift in Sources */,
 				5373FA6D228538C00021CFB5 /* UITextFieldExtension.swift in Sources */,

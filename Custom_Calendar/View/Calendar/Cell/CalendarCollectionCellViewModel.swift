@@ -9,4 +9,12 @@
 import Foundation
 
 final class CalendarCollectionCellViewModel {
+
+    // MARK: - Properties
+    let displayName: String
+
+    // MARK: - Life cycle
+    init(displayName: String = "") {
+        self.displayName = displayName
+    }
 }

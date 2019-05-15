@@ -12,4 +12,8 @@ extension Int {
     var scaling: CGFloat {
         return CGFloat(self) * CGFloat.ratio
     }
+
+    var cgFloat: CGFloat {
+        return CGFloat(self)
+    }
 }

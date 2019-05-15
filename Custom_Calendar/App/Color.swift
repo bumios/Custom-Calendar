@@ -14,9 +14,13 @@ struct App {
 
 struct Color {
     static let orange = RGB(red: 241, green: 128, blue: 107)
-    static let lightBlue = RGB(red: 90, green: 188, blue: 222)
+    static let saturdayTextBlue = RGB(red: 90, green: 188, blue: 222)
+    static let cellRangeBlue = RGB(red: 188, green: 227, blue: 227)
+    static let cellSelectedCornerBlue = RGB(red: 87, green: 186, blue: 186)
     static let black = RGB(red: 51, green: 51, blue: 51)
     static let pink = RGB(red: 238, green: 99, blue: 158)
+    static let brown = RGB(red: 122, green: 114, blue: 117)
+    static let calendarClearBackground = RGB(red: 247, green: 247, blue: 247)
 }
 
 extension Color {

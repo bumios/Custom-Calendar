@@ -10,7 +10,19 @@ import UIKit
 
 final class CalendarViewController: UIViewController {
 
+    typealias WeekDay = CalendarViewModel.WeekDay
+
     // MARK: - IBOutlet
+    @IBOutlet private weak var monthYearLabel: UILabel!
+    @IBOutlet private weak var sundayLabel: UILabel!
+    @IBOutlet private weak var mondayLabel: UILabel!
+    @IBOutlet private weak var tuesdayLabel: UILabel!
+    @IBOutlet private weak var wednesdayLabel: UILabel!
+    @IBOutlet private weak var thursdayLabel: UILabel!
+    @IBOutlet private weak var fridayLabel: UILabel!
+    @IBOutlet private weak var saturdayLabel: UILabel!
+    @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet private weak var collectionViewHeightConstraint: NSLayoutConstraint!
 
     // MARK: - Properties
     private let viewModel = CalendarViewModel()
@@ -18,52 +30,98 @@ final class CalendarViewController: UIViewController {
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        for month in 1 ... 12 {
-            print("Tháng \(month): bắt đầu vào ngày \(firstWeekdayName(month: month, year: 2019))")
-        }
+        configureUI()
+    }
+
+    @IBAction private func previousButtonTapped(_ button: UIButton) {
+        viewModel.decreaseMonth()
+        updateView()
+    }
+
+    @IBAction private func nextButtonTapped(_ button: UIButton) {
+        viewModel.increaseMonth()
+        updateView()
     }
 }
 
+// MARK: - Extension UICollectionViewDataSource
+extension CalendarViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.numberOfItems()
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueCell(CalendarCollectionCell.self, indexPath: indexPath)
+        let cellVM = viewModel.viewModelForItem(at: indexPath)
+        cell.updateView(with: cellVM)
+        if viewModel.isValidCell(indexPath) {
+            cell.backgroundColor = .white
+            /// TODO: - Cheat tạm thời để dấu đường line
+            if let layers = cell.layer.sublayers {
+                for layer in layers {
+                    if layer.name == "thisIsBorderExternal" {
+                        layer.removeFromSuperlayer()
+                    }
+                }
+            }
+        } else {
+            cell.backgroundColor = Color.calendarClearBackground
+            cell.addExternalBorder(borderWidth: 1, borderColor: Color.calendarClearBackground)
+        }
+        return cell
+    }
+}
+
+// MARK: - Extension UICollectionViewDelegateFlowLayout
+extension CalendarViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard viewModel.isValidCell(indexPath) else { return }
+    }
+}
+
+// MARK: - Private functions
 extension CalendarViewController {
-
-    /// Đếm tổng số ngày của 1 tháng trong năm
-    private func daysCount(month: Int, year: Int) -> Int {
-        let dateComponents = DateComponents(year: year, month: month)
-        let calendar = Calendar.current
-        guard let date = calendar.date(from: dateComponents),
-            let range = calendar.range(of: .day, in: .month, for: date) else { return 0 }
-        return range.count
-    }
-
-    private func dateFrom(month: Int, year: Int) -> Date {
-        let dateComponents = DateComponents(year: year, month: month)
-        let calendar = Calendar.current
-        guard let date = calendar.date(from: dateComponents) else { return Date() }
-        return date
-    }
-
-    private func firstWeekdayName(month: Int, year: Int) -> String {
-        let date = dateFrom(month: month, year: year)
-        let weekday = Calendar.current.component(.weekday, from: date)
-//        let weekday = Calendar(identifier: .japanese).component(.weekday, from: date)
-        switch weekday {
-        case 1: return "Sunday"
-        case 2: return "Monday"
-        case 3: return "Tuesday"
-        case 4: return "Wednesday"
-        case 5: return "Thursday"
-        case 6: return "Friday"
-        default: return "Saturday"
+    private func configureUI() {
+        /// Header of calendar
+        let headerLabels: [UILabel] = [sundayLabel, mondayLabel, tuesdayLabel, wednesdayLabel, thursdayLabel, fridayLabel, saturdayLabel]
+        for index in 0 ..< WeekDay.count {
+            headerLabels[index].text = WeekDay(rawValue: index + 1)?.displayName
         }
+        updateMonthYearLabel()
+        /// Collection view
+        collectionView.register(nibWithCellClass: CalendarCollectionCell.self)
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        let width = collectionView.bounds.width / 7
+        layout.itemSize = CGSize(width: width, height: width)
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        collectionView.collectionViewLayout = layout
+        let numberOfCell = viewModel.numberOfColumns.cgFloat
+        collectionViewHeightConstraint.constant = numberOfCell * width
+    }
+
+    private func updateMonthYearLabel() {
+        monthYearLabel.text = "\(viewModel.year)年\(viewModel.month)月"
+    }
+
+    private func updateView() {
+        collectionView.reloadData()
+        let width = collectionView.bounds.width / 7
+        let numberOfCell = viewModel.numberOfColumns.cgFloat
+        collectionViewHeightConstraint.constant = numberOfCell * width
+        updateMonthYearLabel()
     }
 }
 
-extension Date {
-    func startOfMonth() -> Date {
-        return Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: self)))!
-    }
-
-    func endOfMonth() -> Date {
-        return Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: self.startOfMonth())!
+extension UIView {
+    // TODO: - Not working perfectly like this function said
+    func addExternalBorder(borderWidth: CGFloat = 2.0, borderColor: UIColor = UIColor.white) {
+        let externalBorder = CALayer()
+        externalBorder.frame = CGRect(x: -borderWidth, y: -borderWidth, width: frame.size.width + 2 * borderWidth, height: frame.size.height + 2 * borderWidth)
+        externalBorder.borderColor = borderColor.cgColor
+        externalBorder.borderWidth = borderWidth
+        externalBorder.name = "thisIsBorderExternal"
+        layer.insertSublayer(externalBorder, at: 0)
+        layer.masksToBounds = false
     }
 }

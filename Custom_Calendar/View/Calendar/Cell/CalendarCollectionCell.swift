@@ -9,4 +9,15 @@
 import UIKit
 
 final class CalendarCollectionCell: UICollectionViewCell {
+
+    // MARK: - IBOutlets
+    @IBOutlet weak var dayLabel: UILabel!
+
+    // MARK: - Properties
+    var viewModel = CalendarCollectionCellViewModel()
+
+    // MARK: - Public
+    func updateView(with viewModel: CalendarCollectionCellViewModel) {
+        dayLabel.text = viewModel.displayName
+    }
 }
