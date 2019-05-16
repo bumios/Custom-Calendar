@@ -26,8 +26,8 @@ extension Date {
         return range.count
     }
 
-    static func dateFrom(month: Int, year: Int) -> Date {
-        let dateComponents = DateComponents(year: year, month: month)
+    static func dateFrom(year: Int, month: Int, day: Int = 1) -> Date {
+        let dateComponents = DateComponents(year: year, month: month, day: day)
         let calendar = Calendar.current
         guard let date = calendar.date(from: dateComponents) else { return Date() }
         return date

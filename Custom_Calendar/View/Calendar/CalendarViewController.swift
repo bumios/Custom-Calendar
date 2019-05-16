@@ -53,21 +53,9 @@ extension CalendarViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueCell(CalendarCollectionCell.self, indexPath: indexPath)
         let cellVM = viewModel.viewModelForItem(at: indexPath)
+        let cellBackgroundColor = viewModel.isValidCell(indexPath) ? .white : Color.calendarClearBackground
         cell.updateView(with: cellVM)
-        if viewModel.isValidCell(indexPath) {
-            cell.backgroundColor = .white
-            /// TODO: - Cheat tạm thời để dấu đường line
-            if let layers = cell.layer.sublayers {
-                for layer in layers {
-                    if layer.name == "thisIsBorderExternal" {
-                        layer.removeFromSuperlayer()
-                    }
-                }
-            }
-        } else {
-            cell.backgroundColor = Color.calendarClearBackground
-            cell.addExternalBorder(borderWidth: 1, borderColor: Color.calendarClearBackground)
-        }
+        cell.backgroundColor = cellBackgroundColor
         return cell
     }
 }
@@ -76,6 +64,8 @@ extension CalendarViewController: UICollectionViewDataSource {
 extension CalendarViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard viewModel.isValidCell(indexPath) else { return }
+        viewModel.didSelect(at: indexPath)
+        collectionView.reloadData()
     }
 }
 
@@ -87,41 +77,21 @@ extension CalendarViewController {
         for index in 0 ..< WeekDay.count {
             headerLabels[index].text = WeekDay(rawValue: index + 1)?.displayName
         }
-        updateMonthYearLabel()
         /// Collection view
         collectionView.register(nibWithCellClass: CalendarCollectionCell.self)
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        let width = collectionView.bounds.width / 7
-        layout.itemSize = CGSize(width: width, height: width)
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
-        collectionView.collectionViewLayout = layout
-        let numberOfCell = viewModel.numberOfColumns.cgFloat
-        collectionViewHeightConstraint.constant = numberOfCell * width
-    }
-
-    private func updateMonthYearLabel() {
-        monthYearLabel.text = "\(viewModel.year)年\(viewModel.month)月"
+        updateView()
     }
 
     private func updateView() {
         collectionView.reloadData()
-        let width = collectionView.bounds.width / 7
-        let numberOfCell = viewModel.numberOfColumns.cgFloat
-        collectionViewHeightConstraint.constant = numberOfCell * width
-        updateMonthYearLabel()
-    }
-}
-
-extension UIView {
-    // TODO: - Not working perfectly like this function said
-    func addExternalBorder(borderWidth: CGFloat = 2.0, borderColor: UIColor = UIColor.white) {
-        let externalBorder = CALayer()
-        externalBorder.frame = CGRect(x: -borderWidth, y: -borderWidth, width: frame.size.width + 2 * borderWidth, height: frame.size.height + 2 * borderWidth)
-        externalBorder.borderColor = borderColor.cgColor
-        externalBorder.borderWidth = borderWidth
-        externalBorder.name = "thisIsBorderExternal"
-        layer.insertSublayer(externalBorder, at: 0)
-        layer.masksToBounds = false
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        let width = (collectionView.bounds.width / 7).scaling
+        let height = width + 10         // 10 is random number, change if you want
+        layout.itemSize = CGSize(width: width, height: height)
+        layout.minimumInteritemSpacing = 0.0
+        layout.minimumLineSpacing = 0.0
+        collectionView.collectionViewLayout = layout
+        collectionViewHeightConstraint.constant = viewModel.numberOfColumns.cgFloat * height
+        monthYearLabel.text = "\(viewModel.year)年\(viewModel.month)月"
     }
 }

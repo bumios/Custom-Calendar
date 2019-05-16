@@ -17,7 +17,8 @@ final class DatePickerViewModel {
         var data: [String] {
             switch self {
             case .month:
-                return ["Jan", "Feb"]
+                return ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"]
             case .year:
                 var values: [String] = []
                 for index in 1900 ... 2100 {
