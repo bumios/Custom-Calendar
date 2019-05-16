@@ -24,11 +24,14 @@ final class CalendarCollectionCellViewModel {
     let displayName: String
     let weekDay: WeekDay
     let selectionStyle: SelectionStyle
+    let hasEvent: Bool
 
     // MARK: - Life cycle
-    init(displayName: String, weekDay: WeekDay, selectionStyle: SelectionStyle = .none) {
+    init(displayName: String, weekDay: WeekDay,
+         selectionStyle: SelectionStyle = .none, hasEvent: Bool = false) {
         self.displayName = displayName
         self.weekDay = weekDay
         self.selectionStyle = selectionStyle
+        self.hasEvent = hasEvent
     }
 }

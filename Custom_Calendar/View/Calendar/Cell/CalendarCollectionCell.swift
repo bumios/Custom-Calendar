@@ -18,12 +18,16 @@ final class CalendarCollectionCell: UICollectionViewCell {
     @IBOutlet private weak var dayLabel: UILabel!
     @IBOutlet private weak var dayBackgroundView: UIView!
     @IBOutlet private weak var highLightView: UIView!
+    @IBOutlet private weak var eventDotView: UIView!
     @IBOutlet private weak var highLightViewLeadingConstraint: NSLayoutConstraint!
     @IBOutlet private weak var highLightViewTrailingConstraint: NSLayoutConstraint!
 
     // MARK: - Public
     func updateView(with viewModel: CalendarCollectionCellViewModel) {
         layoutIfNeeded()
+        let eventDotViewBackgroundColor = viewModel.hasEvent ? Color.sundayTextOrange : .clear
+        eventDotView.layer.cornerRadius = eventDotView.bounds.size.width / 2
+        eventDotView.backgroundColor = eventDotViewBackgroundColor
         dayLabel.text = viewModel.displayName
         configureDefaultUI()
 

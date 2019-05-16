@@ -42,11 +42,16 @@ final class CalendarViewModel {
         }()
     }
 
-    // MARK: - Properties
+    // MARK: Customizable properties
     var month: Int = 1
     var year: Int = 2019
     var selectedRange: [Int] = []
-    /// Calculate variable
+
+    /// eventDays variable: Use as an exactly day, not indexPath.
+    /// For example: [1, 2, ..., 31]
+    var eventDays: [Int] = []           // Has Orange rounded view
+
+    // MARK: Calculate properties
     var numberOfColumns: Int {
         let extraCell = getWeekdayType(year: year, month: month).extraCell
         let daysInMonth = Date.numberOfDays(month: month, year: year)
@@ -76,12 +81,14 @@ final class CalendarViewModel {
         var displayValue = ""
         var weekDay: WeekDay = .monday
         var selectionStyle: SelectionStyle = .none
+        var hasEvent: Bool = false
 
         if isValidCell(indexPath) {
             let minimumCell = getWeekdayType(year: year, month: month).extraCell
             displayValue = "\(indexPath.row - minimumCell + 1)"
             weekDay = getWeekdayType(year: year, month: month, day: displayValue.int)
 
+            /// Handle cell selection style
             if selectedRange.count == 1 {
                 if row == selectedRange[0] {
                     selectionStyle = .beginSelectionOnly
@@ -97,10 +104,16 @@ final class CalendarViewModel {
                     }
                 }
             }
+
+            /// Handle cell special event
+            if eventDays.contains(displayValue.int) {
+                hasEvent = true
+            }
         }
         return CalendarCollectionCellViewModel(displayName: displayValue,
                                                weekDay: weekDay,
-                                               selectionStyle: selectionStyle)
+                                               selectionStyle: selectionStyle,
+                                               hasEvent: hasEvent)
     }
 
     // MARK: - Calculate function
