@@ -36,7 +36,7 @@ final class CalendarViewController: UIViewController {
     @IBAction private func previousButtonTapped(_ button: UIButton) {
         viewModel.decreaseMonth()
         updateView()
-    }
+    }//
 
     @IBAction private func nextButtonTapped(_ button: UIButton) {
         viewModel.increaseMonth()
